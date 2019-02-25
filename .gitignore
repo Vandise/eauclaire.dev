@@ -1,0 +1,6 @@
+.DS_Store
+.terraform
+authorized_keys.sh
+credentials
+terraform.tfstate
+terraform.tfstate.backup
