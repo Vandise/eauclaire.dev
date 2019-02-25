@@ -1,22 +1,17 @@
-read ns1
-read ns2
-read ns3
-read ns4
+domain="eauclaire.dev"                      # domain to update
+type="A"                                    # Record type A, CNAME, MX, etc.
+name="@"                                    # name of record to update
+ttl="600"                                   # Time to Live min value 600
+port="1"                                    # Required port, Min value 1
+weight="1"                                  # Required weight, Min value 1
+key="$1"                                    # key for godaddy developer API
+secret="$2"                                 # secret for godaddy developer API
+ip="$3"
 
-godaddy_key="$1"
-godaddy_secret="$2"
+headers="Authorization: sso-key $key:$secret"
 
-exit 0
-
-ns1="$ns1" | cut -c 3-
-echo "\n\n $ns1 \n\n"
-
-# remove commas
-ns1="${ns1::${#ns1}-1}"
-ns1=$ns1 | cut -c 3-
-ns2="${ns2::${#ns2}-1}"
-ns3="${ns3::${#ns3}-1}"
-
-data="[{\"type\":\"NS\",\"name\":\"@\",\"data\":\"$ns2\",\"ttl\":3600},{\"type\":\"NS\",\"name\":\"@\",\"data\":\"$ns3\",\"ttl\":3600},{\"type\":\"NS\",\"name\":\"@\",\"data\":\"$ns4\",\"ttl\":3600}]"
-
-curl -X PUT -H "Content-type: application/json" -H "Authorization: sso-key $godaddy_key:$godaddy_secret" -d ${data} "https://api.godaddy.com/v1/domains/eauclaire.dev/records/NS"
+curl -X PUT "https://api.godaddy.com/v1/domains/$domain/records/$type/$name" \
+-H "accept: application/json" \
+-H "Content-Type: application/json" \
+-H "$headers" \
+-d "[ { \"data\": \"$ip\", \"port\": $port, \"priority\": 0, \"protocol\": \"string\", \"service\": \"string\", \"ttl\": $ttl, \"weight\": $weight } ]"

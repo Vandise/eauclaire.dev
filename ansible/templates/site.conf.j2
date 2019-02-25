@@ -1,0 +1,33 @@
+events {
+  worker_connections  1024;
+}
+
+http {
+  include       mime.types;
+  default_type  application/octet-stream;
+  sendfile      on;
+
+  keepalive_timeout  65;
+
+  server {
+    listen 80;
+    server_name eauclaire.dev;
+    return 301 https://$host$request_uri;
+  }
+
+  server {
+      listen 443 ssl;
+      server_name eauclaire.dev;
+      ssl_certificate     /etc/nginx/ssl/eauclairedev.crt;
+      ssl_certificate_key /etc/nginx/ssl/eauclairedev.key;
+  
+      root /var/www/eauclaire.dev/public/;
+      index index.html;
+    
+      server_name eauclaire.dev;
+    
+      location / {
+        try_files $uri $uri/ =404;
+      }
+  }
+}

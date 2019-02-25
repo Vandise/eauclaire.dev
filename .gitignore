@@ -4,3 +4,6 @@ authorized_keys.sh
 credentials
 terraform.tfstate
 terraform.tfstate.backup
+*.crt
+*.key
+*.retry
