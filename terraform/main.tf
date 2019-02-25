@@ -18,6 +18,11 @@ variable "godaddy_secret" {
   description = "Godaddy API Secret"
 }
 
+variable "webserver_domain" {
+  default = "eauclaire.dev"
+  description = "Webserver Domain"
+}
+
 variable "web1_ip" {
   default = ""
   description = "Web 1 server ip"
@@ -34,12 +39,14 @@ module "webservers" {
   aws_region = "${var.aws_region}"
   aws_availability_zone = "${var.aws_availability_zone}"
   webserver_port = "443"
+  webserver_domain = "${var.webserver_domain}"
 }
 
 module "dns" {
   source = "./modules/dns"
 
   web1_ip = "${module.webservers.web1_ip}"
+  webserver_domain = "${var.webserver_domain}"
 }
 
 module "godaddy" {
@@ -48,4 +55,5 @@ module "godaddy" {
   godaddy_key = "${var.godaddy_key}"
   godaddy_secret = "${var.godaddy_secret}"
   web1_ip = "${module.webservers.web1_ip}"
+  webserver_domain = "${var.webserver_domain}"
 }

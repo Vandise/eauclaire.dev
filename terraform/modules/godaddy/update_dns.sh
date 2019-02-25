@@ -1,4 +1,4 @@
-domain="eauclaire.dev"                      # domain to update
+domain="$4"                                 # domain to update
 type="A"                                    # Record type A, CNAME, MX, etc.
 name="@"                                    # name of record to update
 ttl="600"                                   # Time to Live min value 600

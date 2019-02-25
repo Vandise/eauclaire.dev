@@ -9,3 +9,7 @@ variable "aws_availability_zone" {
 variable "webserver_port" {
   description = "Webserver Port"
 }
+
+variable "webserver_domain" {
+  description = "Domain to update in godaddy"
+}
