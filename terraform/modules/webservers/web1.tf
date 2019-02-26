@@ -1,6 +1,6 @@
 resource "aws_instance" "eauclaire_dev_web1" {
   instance_type = "t2.micro"
-  vpc_security_group_ids = [ "${aws_security_group.eauclaire_dev_web_security_group.id}" ]
+  vpc_security_group_ids = [ "${aws_security_group.web_security_group.id}" ]
   associate_public_ip_address = true
   user_data = "${file("./shared/scripts/authorized_keys.sh")}"
 

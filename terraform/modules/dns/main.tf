@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "web1" {
-  name = "${var.webserver_domain} "
+  name = "${var.webserver_domain}"
   comment = "${var.webserver_domain} Zone"
 }
 
